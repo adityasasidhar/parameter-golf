@@ -47,7 +47,7 @@ class Hyperparameters:
     max_wallclock_seconds = float(os.environ.get("MAX_WALLCLOCK_SECONDS", 600.0))
     qk_gain_init = float(os.environ.get("QK_GAIN_INIT", 5))
     vocab_size = int(os.environ.get("VOCAB_SIZE", 8192))
-    num_layers = int(os.environ.get("NUM_LAYERS", 7))
+    num_layers = int(os.environ.get("NUM_LAYERS", 6))
     num_kv_heads = int(os.environ.get("NUM_KV_HEADS", 4))
     model_dim = int(os.environ.get("MODEL_DIM", 512))
     num_heads = int(os.environ.get("NUM_HEADS", 8))
@@ -74,9 +74,9 @@ class Hyperparameters:
     muon_wd = float(os.environ.get("MUON_WD", 0.02))
     adam_wd = float(os.environ.get("ADAM_WD", 0.04))
     grad_clip_norm = float(os.environ.get("GRAD_CLIP_NORM", 0.0))
-    xsa_last_n = int(os.environ.get("XSA_LAST_N", 2))
+    xsa_last_n = int(os.environ.get("XSA_LAST_N", 3))
     depth_recurrence = int(os.environ.get("DEPTH_RECURRENCE", 2))
-    parallel_residual_start = int(os.environ.get("PARALLEL_RESIDUAL_START", 4))
+    parallel_residual_start = int(os.environ.get("PARALLEL_RESIDUAL_START", -1))
     warmdown_last_frac = float(os.environ.get("WARMDOWN_LAST_FRAC", 0.2))
     use_flash_attn_interface = bool(
         int(os.environ.get("USE_FLASH_ATTN_INTERFACE", "1"))
@@ -86,7 +86,7 @@ class Hyperparameters:
     ttt_lr = float(os.environ.get("TTT_LR", 0.002))
     ttt_epochs = int(os.environ.get("TTT_EPOCHS", 1))
     ttt_chunk_tokens = int(os.environ.get("TTT_CHUNK_TOKENS", 32768))
-    ttt_freeze_blocks = int(os.environ.get("TTT_FREEZE_BLOCKS", 4))
+    ttt_freeze_blocks = int(os.environ.get("TTT_FREEZE_BLOCKS", 3))
     ttt_momentum = float(os.environ.get("TTT_MOMENTUM", 0.9))
     ttt_batch_seqs = int(os.environ.get("TTT_BATCH_SEQS", 32))
     ttt_grad_clip = float(os.environ.get("TTT_GRAD_CLIP", 1.0))
@@ -530,7 +530,7 @@ INT6_NAME_PATTERNS = tuple(
         pattern
         for pattern in os.environ.get(
             "INT6_NAME_PATTERNS",
-            "blocks.0.attn.,blocks.1.attn.,blocks.2.attn.",
+            "",
         ).split(",")
         if pattern
     )
